@@ -12,6 +12,14 @@ Include in your code and begin using the library:
 #include <sProgress>
 ```
 
+## Explaination
+### Bars and override mode
+![](https://github.com/vdgiapp/sProgress/blob/main/_explaination.gif)
+
+### Types
+![](https://github.com/vdgiapp/sProgress/blob/main/_types_1.gif)
+![](https://github.com/vdgiapp/sProgress/blob/main/_types_2.gif)
+
 ## Usage
 ### Values
 - `MAX_SPROGRESS_BARS`: Defaults to the player textdraw limit divided by 4 (64).
