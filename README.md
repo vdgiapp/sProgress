@@ -14,12 +14,11 @@ Include in your code and begin using the library:
 
 ## Explaination
 ### Bars and override mode
-<img src="https://github.com/vdgiapp/sProgress/blob/main/_explaination.gif" width=25% height=25%>
+<img src="https://github.com/vdgiapp/sProgress/blob/main/_explaination.gif" width=50% height=50%>
 
 ### Types
-<img src="https://github.com/vdgiapp/sProgress/blob/main/_types_1.gif" width=25% height=25%>
-
-<img src="https://github.com/vdgiapp/sProgress/blob/main/_types_2.gif" width=25% height=25%>
+<img src="https://github.com/vdgiapp/sProgress/blob/main/_types_1.gif" width=50% height=50%>
+<img src="https://github.com/vdgiapp/sProgress/blob/main/_types_2.gif" width=50% height=50%>
 
 ## Usage
 ### Values
