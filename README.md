@@ -20,7 +20,7 @@ Include in your code and begin using the library:
 <img src="https://github.com/vdgiapp/sProgress/blob/main/_types_1.gif" width=50% height=50%>
 <img src="https://github.com/vdgiapp/sProgress/blob/main/_types_2.gif" width=50% height=50%>
 
-## USAGE
+## DEFINES
 ### Values
 - `MAX_SPROGRESS_BARS`: Defaults to the player textdraw limit divided by 4 (64).
 - `INVALID_SP_BAR_VALUE`: Invalid return value for interface functions.
@@ -34,8 +34,8 @@ Include in your code and begin using the library:
 - `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertical (sub bar will not work with this type).
 - `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontal (sub bar will not work with this type).
   
-### Functions
-#### Main
+## Functions
+### Main
 - `CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)`: Create a progress bar for a player, return the bar ID if its created.
 - `DestroyPlayerSProgress(playerid, barid)`: Destroy a player's progress bar.
 - `DestroyAllPlayerSProgress(playerid)`: Destroy all progress bars for a player.
@@ -90,7 +90,7 @@ Include in your code and begin using the library:
 - `SetPlayerSProgressSubMinValue(playerid, barid, Float:val)`: Set the sub min value of a progress bar.
 - `SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)`: Set the sub max value of a progress bar.
 
-### Hooked
+## Hooked
 - `OnScriptInit`: When y_iterate is used, initialises iterators.
 - `OnPlayerDisconnect`: To automatically destroy bars when a player disconnects.
 - `OnScriptExit`
