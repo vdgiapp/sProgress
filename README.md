@@ -62,7 +62,7 @@ Include in your code and begin using the library:
 - `Float:GetPlayerSProgressWidth(playerid, barid)`: Returns the width of a progress bar.
 - `SetPlayerSProgressWidth(playerid, barid, Float:w)`: Updates the width of a progress bar.
 - `Float:GetPlayerSProgressHeight(playerid, barid)`: Returns the height of a progress bar.
-- `SetPlayerSProgressHeight(playerid, barid, Float:w)`: Updates the height of a progress bar.
+- `SetPlayerSProgressHeight(playerid, barid, Float:h)`: Updates the height of a progress bar.
 
 ### Border size (greater or equal 0)
 - `Float:GetPlayerSProgressBorderSize(playerid, barid)`: Return border size of a progress bar.
