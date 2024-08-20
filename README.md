@@ -5,11 +5,13 @@ Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) 
 - Support [open.mp](https://github.com/openmultiplayer/open.mp)
 - Support [samp-textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
 
-- New features:
+## NEW FEATURES:
+```
   - Use TextDraw sprites (LD_SPAC:white) instead of box.
-  - New types (direction): Vertically and horizontally middle-to-edge types.
+  - New types (direction): Middle-to-edge direction, vertically and horizontally.
   - Border size (set to 0.0 to hide background bar).
-  - Sub bar with override mode for sub bar (sub bar cant be use with middle-to-edge types).
+  - Sub bar with override mode (sub bar cant be use with middle-to-edge direction).
+```
 
 ## INSTALLATION
 Include in your code and begin using the library:
@@ -33,12 +35,12 @@ Include in your code and begin using the library:
 - `INVALID_SP_BAR_ID`: Invalid bar ID value.
 
 ### Types
-- `SP_BAR_TYPE_RIGHT`: Bar direction left-to-right.
-- `SP_BAR_TYPE_LEFT`: Bar direction right-to-left.
-- `SP_BAR_TYPE_UP`: Bar direction bottom to top.
-- `SP_BAR_TYPE_DOWN`: Bar direction top to bottom.
-- `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertically (sub bar will not work with this type).
-- `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontally (sub bar will not work with this type).
+- `SP_BAR_TYPE_RIGHT`: Left-to-right bar direction.
+- `SP_BAR_TYPE_LEFT`: Right-to-left bar direction.
+- `SP_BAR_TYPE_UP`: Bottom to top bar direction.
+- `SP_BAR_TYPE_DOWN`: Top to bottom bar direction.
+- `SP_BAR_TYPE_MID_V`: Middle-to-edge bar direction, vertically (sub bar will not work with this type).
+- `SP_BAR_TYPE_MID_H`: Middle-to-edge bar direction, horizontally (sub bar will not work with this type).
   
 ## FUNCTIONS
 ### Main
