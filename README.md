@@ -5,14 +5,14 @@ Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) 
 - Support [open.mp](https://github.com/openmultiplayer/open.mp/releases)
 - Support [textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
 
-## Installation
+## INSTALLATION
 Include in your code and begin using the library:
 
 ```pawn
 #include <sProgress>
 ```
 
-## Explaination
+## EXPLAINATION
 ### Bars and override mode
 <img src="https://github.com/vdgiapp/sProgress/blob/main/_explaination.gif" width=50% height=50%>
 
@@ -20,7 +20,7 @@ Include in your code and begin using the library:
 <img src="https://github.com/vdgiapp/sProgress/blob/main/_types_1.gif" width=50% height=50%>
 <img src="https://github.com/vdgiapp/sProgress/blob/main/_types_2.gif" width=50% height=50%>
 
-## Usage
+## USAGE
 ### Values
 - `MAX_SPROGRESS_BARS`: Defaults to the player textdraw limit divided by 4 (64).
 - `INVALID_SP_BAR_VALUE`: Invalid return value for interface functions.
