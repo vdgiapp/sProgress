@@ -58,13 +58,13 @@ Include in your code and begin using the library:
 - `GetPlayerSProgressPos(playerid, barid, &Float:x, &Float:y)`: Returns the on-screen position of the specified progress bar.
 - `SetPlayerSProgressPos(playerid, barid, Float:x, Float:y)`: Updates the position for a progress bar.
 
-#### Width/height
+#### Width/height (greater or equal 0)
 - `Float:GetPlayerSProgressWidth(playerid, barid)`: Returns the width of a progress bar.
 - `SetPlayerSProgressWidth(playerid, barid, Float:w)`: Updates the width of a progress bar.
 - `Float:GetPlayerSProgressHeight(playerid, barid)`: Returns the height of a progress bar.
 - `SetPlayerSProgressHeight(playerid, barid, Float:w)`: Updates the height of a progress bar.
 
-#### Border size
+#### Border size (greater or equal 0)
 - `Float:GetPlayerSProgressBorderSize(playerid, barid)`: Return border size of a progress bar.
 - `SetPlayerSProgressBorderSize(playerid, barid, Float:b)`: Updates border size of a progress bar.
 
@@ -76,7 +76,7 @@ Include in your code and begin using the library:
 - `GetPlayerSProgressType(playerid, barid)`: Return the type of a progress bar.
 - `SetPlayerSProgressType(playerid, barid, type)`: Updates the type of a progress bar.
 
-#### Main value
+#### Main value (greater or equal 0)
 - `Float:GetPlayerSProgressMinValue(playerid, barid)`: Return the min value of a progress bar.
 - `Float:GetPlayerSProgressMaxValue(playerid, barid)`: Return the max value of a progress bar.
 - `Float:GetPlayerSProgressValue(playerid, barid)`: Return the value of a progress bar.
@@ -84,7 +84,7 @@ Include in your code and begin using the library:
 - `SetPlayerSProgressMaxValue(playerid, barid, Float:val)`: Set the max value of a progress bar.
 - `SetPlayerSProgressValue(playerid, barid, Float:val)`: Set the value of a progress bar.
 
-#### Sub value
+#### Sub value (greater or equal 0)
 - `Float:GetPlayerSProgressSubMinValue(playerid, barid)`: Return the sub min value of a progress bar.
 - `Float:GetPlayerSProgressSubMaxValue(playerid, barid)`: Return the sub max value of a progress bar.
 - `SetPlayerSProgressSubMinValue(playerid, barid, Float:val)`: Set the sub min value of a progress bar.
