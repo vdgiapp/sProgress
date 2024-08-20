@@ -13,9 +13,12 @@ Include in your code and begin using the library:
 
 ## Usage
 ### Values
-- `MAX_SPROGRESS_BARS`: Defaults to the player textdraw limit divided by 4
-- `INVALID_SP_BAR_VALUE`: Invalid return value for interface functions.
-- `INVALID_SP_BAR_ID`: Invalid bar ID value.
+- `MAX_SPROGRESS_BARS`:
+  - Defaults to the player textdraw limit divided by 4 (64).
+- `INVALID_SP_BAR_VALUE`:
+  - Invalid return value for interface functions.
+- `INVALID_SP_BAR_ID`:
+  - Invalid bar ID value.
 
 ### Types
 - `SP_BAR_TYPE_RIGHT`: Bar direction left-to-right.
