@@ -7,6 +7,6 @@ Based on progress2.inc by Southclaws with new features.
 # Installation
 
 Include in your code and begin using the library:
-```#include <sProgress>```
+`#include <sProgress>`
 
 # Usage
