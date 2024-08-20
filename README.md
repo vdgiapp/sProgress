@@ -24,10 +24,10 @@ Include in your code and begin using the library:
 - `SP_BAR_TYPE_UP`: Bar direction bottom to top.
 - `SP_BAR_TYPE_DOWN`: Bar direction top to bottom.
 - `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertical
+  - `SetPlayerSProgressSubColor`, `SetPlayerSProgressSubMinValue` and `SetPlayerSProgressSubMaxValue` will not work with middle-to-edge type.
 - `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontal
-#### Notes
-- `SetPlayerSProgressSubColor`, `SetPlayerSProgressSubMinValue` and `SetPlayerSProgressSubMaxValue` will not work with middle-to-edge type.
-- 
+  - `SetPlayerSProgressSubColor`, `SetPlayerSProgressSubMinValue` and `SetPlayerSProgressSubMaxValue` will not work with middle-to-edge type.
+  
 ### Function
 - `CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)`: Create a progress bar for a player, return the bar ID if its created.
 - `DestroyPlayerSProgress(playerid, barid)`: Destroy a player's progress bar.
