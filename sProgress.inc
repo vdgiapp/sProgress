@@ -4,32 +4,10 @@
 	(based on progress2)
 	Version: v1.0
 
+	open.mp: https://github.com/openmultiplayer/open.mp/releases
 	progress2: https://github.com/Southclaws/progress2
 	textdraw-streamer: https://github.com/nexquery/samp-textdraw-streamer
 	YSI-Includes: https://github.com/pawn-lang/YSI-Includes
-
-	FUNCTIONS:
-	+ bool:IsValidPlayerSProgress(playerid, barid)
-	+ bool:IsPlayerSProgressVisible(playerid, barid)
-	+ CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)
-	+ DestroyPlayerSProgress(playerid, barid)
-	+ DestroyAllPlayerSProgress(playerid)
-	+ (Show/Hide)PlayerSProgress(playerid, barid)
-	+ (Get/Set)PlayerSProgressBackColor
-	+ (Get/Set)PlayerSProgressFillColor
-	+ (Get/Set)PlayerSProgressMainColor
-	+ (Get/Set)PlayerSProgressSubColor
-	+ (Get/Set)PlayerSProgressPos
-	+ (Get/Set)PlayerSProgressOverride
-	+ (Get/Set)PlayerSProgressType
-	+ (Float:Get/Set)PlayerSProgressWidth
-	+ (Float:Get/Set)PlayerSProgressHeight
-	+ (Float:Get/Set)PlayerSProgressBorderSize
-	+ (Float:Get/Set)PlayerSProgressMinValue
-	+ (Float:Get/Set)PlayerSProgressMaxValue
-	+ (Float:Get/Set)PlayerSProgressValue
-	+ (Float:Get/Set)PlayerSProgressSubMinValue
-	+ (Float:Get/Set)PlayerSProgressSubMaxValue
 */
 
 #if defined _inc_s_progress
@@ -76,10 +54,10 @@ enum static E_SPROGRESS_DATA {
 	Float:sp_width,
 	Float:sp_height,
 	Float:sp_borderSize,
-	sp_colorFill,
-	sp_colorMain,
-	sp_colorBack,
-	sp_colorSub,
+	sp_colourFill,
+	sp_colourMain,
+	sp_colourBack,
+	sp_colourSub,
 	bool:sp_override,
 	Float:sp_minValue,
 	Float:sp_maxValue,
@@ -138,14 +116,15 @@ stock ShowPlayerSProgress(playerid, barid) {
 	sp_Data[playerid][barid][sp_show] = true;
 	PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_back]);
 	PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_fill]);
-	if(!sp_Data[playerid][barid][sp_override]) {
-		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_sub]);
+	if(sp_Data[playerid][barid][sp_override]) {
 		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_main]);
+		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_sub]);
 	}
 	else {
-		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_main]);
 		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_sub]);
+		PlayerTextDrawShow(playerid, sp_TextDraw[playerid][barid][sp_main]);
 	}
+	
 	return 1;
 }
 
@@ -177,10 +156,10 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 	sp_Data[playerid][barid][sp_width] = w;
 	sp_Data[playerid][barid][sp_height] = h;
 	sp_Data[playerid][barid][sp_borderSize] = 2.0;
-	sp_Data[playerid][barid][sp_colorBack] = 0x000000FF;
-	sp_Data[playerid][barid][sp_colorFill] = 0x9E9E9EFF;
-	sp_Data[playerid][barid][sp_colorMain] = 0xFFFFFFFF;
-	sp_Data[playerid][barid][sp_colorSub] = 0x00000000;
+	sp_Data[playerid][barid][sp_colourBack] = 0x000000FF;
+	sp_Data[playerid][barid][sp_colourFill] = 0x9E9E9EFF;
+	sp_Data[playerid][barid][sp_colourMain] = 0xFFFFFFFF;
+	sp_Data[playerid][barid][sp_colourSub] = 0x00000000;
 	sp_Data[playerid][barid][sp_override] = false;
 	sp_Data[playerid][barid][sp_minValue] = 0.0;
 	sp_Data[playerid][barid][sp_maxValue] = max;
@@ -192,7 +171,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 	sp_TextDraw[playerid][barid][sp_back] = CreatePlayerTextDraw(playerid, x-sp_Data[playerid][barid][sp_borderSize], y-sp_Data[playerid][barid][sp_borderSize], "LD_SPAC:white");
 	PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_width]*2, sp_Data[playerid][barid][sp_height]*2);
 	PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_back], TEXT_DRAW_ALIGN_LEFT);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_colorBack]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_colourBack]);
 	PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_back], 0);
 	PlayerTextDrawSetOutline(playerid, sp_TextDraw[playerid][barid][sp_back], 0);
 	PlayerTextDrawBackgroundColour(playerid, sp_TextDraw[playerid][barid][sp_back], 255);
@@ -202,7 +181,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 	sp_TextDraw[playerid][barid][sp_fill] = CreatePlayerTextDraw(playerid, x, y, "LD_SPAC:white");
 	PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_fill], sp_Data[playerid][barid][sp_width], sp_Data[playerid][barid][sp_height]);
 	PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_fill], TEXT_DRAW_ALIGN_LEFT);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_fill], sp_Data[playerid][barid][sp_colorFill]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_fill], sp_Data[playerid][barid][sp_colourFill]);
 	PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_fill], 0);
 	PlayerTextDrawSetOutline(playerid, sp_TextDraw[playerid][barid][sp_fill], 0);
 	PlayerTextDrawBackgroundColour(playerid, sp_TextDraw[playerid][barid][sp_fill], 255);
@@ -212,7 +191,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 	sp_TextDraw[playerid][barid][sp_sub] = CreatePlayerTextDraw(playerid, x, y, "LD_SPAC:white");
 	PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_sub], 0, 0);
 	PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_sub], TEXT_DRAW_ALIGN_LEFT);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_sub], sp_Data[playerid][barid][sp_colorSub]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_sub], sp_Data[playerid][barid][sp_colourSub]);
 	PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_sub], 0);
 	PlayerTextDrawSetOutline(playerid, sp_TextDraw[playerid][barid][sp_sub], 0);
 	PlayerTextDrawBackgroundColour(playerid, sp_TextDraw[playerid][barid][sp_sub], 255);
@@ -222,7 +201,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 	sp_TextDraw[playerid][barid][sp_main] = CreatePlayerTextDraw(playerid, x, y, "LD_SPAC:white");
 	PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_main], sp_Data[playerid][barid][sp_width], sp_Data[playerid][barid][sp_height]);
 	PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_main], TEXT_DRAW_ALIGN_LEFT);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_main], sp_Data[playerid][barid][sp_colorMain]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_main], sp_Data[playerid][barid][sp_colourMain]);
 	PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_main], 0);
 	PlayerTextDrawSetOutline(playerid, sp_TextDraw[playerid][barid][sp_main], 0);
 	PlayerTextDrawBackgroundColour(playerid, sp_TextDraw[playerid][barid][sp_main], 255);
@@ -335,51 +314,51 @@ stock SetPlayerSProgressOverride(playerid, barid, bool:override) {
 	return 1;
 }
 
-// Color
-stock GetPlayerSProgressMainColor(playerid, barid) {
+// Colour
+stock GetPlayerSProgressMainColour(playerid, barid) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	return sp_Data[playerid][barid][sp_colorMain];
+	return sp_Data[playerid][barid][sp_colourMain];
 }
 
-stock GetPlayerSProgressFillColor(playerid, barid) {
+stock GetPlayerSProgressFillColour(playerid, barid) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	return sp_Data[playerid][barid][sp_colorFill];
+	return sp_Data[playerid][barid][sp_colourFill];
 }
 
-stock GetPlayerSProgressBackColor(playerid, barid) {
+stock GetPlayerSProgressBackColour(playerid, barid) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	return sp_Data[playerid][barid][sp_colorBack];
+	return sp_Data[playerid][barid][sp_colourBack];
 }
 
-stock GetPlayerSProgressSubColor(playerid, barid) {
+stock GetPlayerSProgressSubColour(playerid, barid) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	return sp_Data[playerid][barid][sp_colorSub];
+	return sp_Data[playerid][barid][sp_colourSub];
 }
 
-stock SetPlayerSProgressMainColor(playerid, barid, colour) {
+stock SetPlayerSProgressMainColour(playerid, barid, colour) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	sp_Data[playerid][barid][sp_colorMain] = colour;
+	sp_Data[playerid][barid][sp_colourMain] = colour;
 	SProgress_RenderBar(playerid, barid);
 	return 1;
 }
 
-stock SetPlayerSProgressFillColor(playerid, barid, colour) {
+stock SetPlayerSProgressFillColour(playerid, barid, colour) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	sp_Data[playerid][barid][sp_colorFill] = colour;
+	sp_Data[playerid][barid][sp_colourFill] = colour;
 	SProgress_RenderBar(playerid, barid);
 	return 1;
 }
 
-stock SetPlayerSProgressBackColor(playerid, barid, colour) {
+stock SetPlayerSProgressBackColour(playerid, barid, colour) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	sp_Data[playerid][barid][sp_colorBack] = colour;
+	sp_Data[playerid][barid][sp_colourBack] = colour;
 	SProgress_RenderBar(playerid, barid);
 	return 1;
 }
 
-stock SetPlayerSProgressSubColor(playerid, barid, colour) {
+stock SetPlayerSProgressSubColour(playerid, barid, colour) {
 	if(!IsValidPlayerSProgress(playerid, barid)) return 0;
-	sp_Data[playerid][barid][sp_colorSub] = colour;
+	sp_Data[playerid][barid][sp_colourSub] = colour;
 	SProgress_RenderBar(playerid, barid);
 	return 1;
 }
@@ -607,10 +586,10 @@ static stock SProgress_RenderBar(playerid, barid) {
 			);
 		}
 	}
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_fill], bar_data[sp_colorFill]);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_back], bar_data[sp_colorBack]);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_sub], bar_data[sp_colorSub]);
-	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_main], bar_data[sp_colorMain]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_fill], bar_data[sp_colourFill]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_back], bar_data[sp_colourBack]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_sub], bar_data[sp_colourSub]);
+	PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_main], bar_data[sp_colourMain]);
 
 	// redraw
 	if(IsPlayerSProgressVisible(playerid, barid)) {
