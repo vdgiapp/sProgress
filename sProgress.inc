@@ -43,8 +43,8 @@
 #define SP_BAR_TYPE_LEFT (1) // right to left
 #define SP_BAR_TYPE_UP (2) // bottom to top
 #define SP_BAR_TYPE_DOWN (3) // top to bottom
-#define SP_BAR_TYPE_MID_V (4) // middle vertical
-#define SP_BAR_TYPE_MID_H (5) // middle horizontal
+#define SP_BAR_TYPE_MID_V (4) // middle to edge - vertical
+#define SP_BAR_TYPE_MID_H (5) // middle to edge - horizontal
 
 enum static E_SPROGRESS_DATA {
 	bool:is_created,
