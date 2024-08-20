@@ -6,10 +6,10 @@ Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) 
 - Support [samp-textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
 
 - New features:
-    - Use TextDraw sprites (LD_SPAC:white) instead of box.
-    - New types (direction): Vertically and horizontally middle-to-edge types.
-    - Border size (set to 0.0 to hide background bar).
-    - Sub bar with override mode for sub bar (sub bar cant be use with middle-to-edge types).
+  - Use TextDraw sprites (LD_SPAC:white) instead of box.
+  - New types (direction): Vertically and horizontally middle-to-edge types.
+  - Border size (set to 0.0 to hide background bar).
+  - Sub bar with override mode for sub bar (sub bar cant be use with middle-to-edge types).
 
 ## INSTALLATION
 Include in your code and begin using the library:
