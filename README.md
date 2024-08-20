@@ -23,12 +23,10 @@ Include in your code and begin using the library:
 - `SP_BAR_TYPE_LEFT`: Bar direction right-to-left.
 - `SP_BAR_TYPE_UP`: Bar direction bottom to top.
 - `SP_BAR_TYPE_DOWN`: Bar direction top to bottom.
-- `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertical
-  - `SetPlayerSProgressSubColor`, `SetPlayerSProgressSubMinValue` and `SetPlayerSProgressSubMaxValue` will not work with middle-to-edge type.
-- `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontal
-  - `SetPlayerSProgressSubColor`, `SetPlayerSProgressSubMinValue` and `SetPlayerSProgressSubMaxValue` will not work with middle-to-edge type.
+- `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertical (sub bar will not work with this type).
+- `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontal (sub bar will not work with this type).
   
-### Function
+### Functions
 - `CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)`: Create a progress bar for a player, return the bar ID if its created.
 - `DestroyPlayerSProgress(playerid, barid)`: Destroy a player's progress bar.
 - `DestroyAllPlayerSProgress(playerid)`: Destroy all progress bars for a player.
@@ -36,19 +34,54 @@ Include in your code and begin using the library:
 - `HidePlayerSProgress(playerid, barid)`: Hides a player's progress bar from them.
 - `bool:IsValidPlayerSProgress(playerid, barid)`: Returns true if the input bar ID is valid and exists.
 - `bool:IsPlayerSProgressVisible(playerid, barid)`: Return true if the input bar ID is visible to player.
-- `GetPlayerSProgressBackColor(playerid, barid)`: Returns the background colour of a progress bar.
-- `SetPlayerSProgressBackColor(playerid, barid, colour)`: Sets the background colour of a progress bar.
-- (Get/Set)PlayerSProgressFillColor
-- (Get/Set)PlayerSProgressMainColor
-- (Get/Set)PlayerSProgressSubColor
-- (Get/Set)PlayerSProgressPos
-- (Get/Set)PlayerSProgressOverride
-- (Get/Set)PlayerSProgressType
-- (Float:Get/Set)PlayerSProgressWidth
-- (Float:Get/Set)PlayerSProgressHeight
-- (Float:Get/Set)PlayerSProgressBorderSize
-- (Float:Get/Set)PlayerSProgressMinValue
-- (Float:Get/Set)PlayerSProgressMaxValue
-- (Float:Get/Set)PlayerSProgressValue
-- (Float:Get/Set)PlayerSProgressSubMinValue
-- (Float:Get/Set)PlayerSProgressSubMaxValue
+
+Colour
+- `GetPlayerSProgressBackColour(playerid, barid)`: Returns the background colour of a progress bar.
+- `SetPlayerSProgressBackColour(playerid, barid, colour)`: Sets the background colour of a progress bar.
+- `GetPlayerSProgressFillColour(playerid, barid)`: Returns the fill colour of a progress bar.
+- `SetPlayerSProgressFillColour(playerid, barid, colour)`: Sets the fill colour of a progress bar.
+- `GetPlayerSProgressMainColour(playerid, barid)`: Returns the main colour of a progress bar.
+- `SetPlayerSProgressMainColour(playerid, barid, colour)`: Sets the main colour of a progress bar.
+- `GetPlayerSProgressSubColour(playerid, barid)`: Returns the sub colour of a progress bar.
+- `SetPlayerSProgressSubColour(playerid, barid, colour)`: Sets the sub colour of a progress bar.
+
+Position
+- `GetPlayerSProgressPos(playerid, barid, &Float:x, &Float:y)`: Returns the on-screen position of the specified progress bar.
+- `SetPlayerSProgressPos(playerid, barid, Float:x, Float:y)`: Updates the position for a progress bar.
+
+Width/height
+- `Float:GetPlayerSProgressWidth(playerid, barid)`: Returns the width of a progress bar.
+- `SetPlayerSProgressWidth(playerid, barid, Float:w)`: Updates the width of a progress bar.
+- `Float:GetPlayerSProgressHeight(playerid, barid)`: Returns the height of a progress bar.
+- `SetPlayerSProgressHeight(playerid, barid, Float:w)`: Updates the height of a progress bar.
+
+Border size
+- `Float:GetPlayerSProgressBorderSize(playerid, barid)`: Return border size of a progress bar.
+- `SetPlayerSProgressBorderSize(playerid, barid, Float:b)`: Updates border size of a progress bar.
+
+Override
+- `bool:GetPlayerSProgressOverride(playerid, barid)`: Return true if the input bar ID uses override mode.
+- `SetPlayerSProgressOverride(playerid, barid, bool:override)`: Set override mode of a progress bar.
+
+Type
+- `GetPlayerSProgressType(playerid, barid)`: Return the type of a progress bar.
+- `SetPlayerSProgressType(playerid, barid, type)`: Updates the type of a progress bar.
+
+Main value
+- `Float:GetPlayerSProgressMinValue(playerid, barid)`: Return the min value of a progress bar.
+- `Float:GetPlayerSProgressMaxValue(playerid, barid)`: Return the max value of a progress bar.
+- `Float:GetPlayerSProgressValue(playerid, barid)`: Return the value of a progress bar.
+- `SetPlayerSProgressMinValue(playerid, barid, Float:val)`: Set the min value of a progress bar.
+- `SetPlayerSProgressMaxValue(playerid, barid, Float:val)`: Set the max value of a progress bar.
+- `SetPlayerSProgressValue(playerid, barid, Float:val)`: Set the value of a progress bar.
+
+Sub value
+- `Float:GetPlayerSProgressSubMinValue(playerid, barid)`: Return the sub min value of a progress bar.
+- `Float:GetPlayerSProgressSubMaxValue(playerid, barid)`: Return the sub max value of a progress bar.
+- `SetPlayerSProgressSubMinValue(playerid, barid, Float:val)`: Set the sub min value of a progress bar.
+- `SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)`: Set the sub max value of a progress bar.
+
+### Hooked
+- `OnScriptInit`: When y_iterate is used, initialises iterators.
+- `OnPlayerDisconnect`: To automatically destroy bars when a player disconnects.
+- `OnScriptExit`
