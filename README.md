@@ -17,6 +17,8 @@ Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) 
 Include in your code and begin using the library:
 
 ```pawn
+#include <open.mp>
+#include <textdraw-streamer>
 #include <sProgress>
 ```
 
