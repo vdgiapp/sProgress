@@ -2,8 +2,8 @@
 Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) by Southclaws with new features.
 
 - Require [YSI-Includes](https://github.com/pawn-lang/YSI-Includes)
-- Support [open.mp](https://github.com/openmultiplayer/open.mp/releases)
-- Support [textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
+- Support [open.mp](https://github.com/openmultiplayer/open.mp)
+- Support [samp-textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
 
 ## INSTALLATION
 Include in your code and begin using the library:
