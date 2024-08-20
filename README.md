@@ -5,6 +5,12 @@ Created by Giapp, based on [progress2](https://github.com/Southclaws/progress2) 
 - Support [open.mp](https://github.com/openmultiplayer/open.mp)
 - Support [samp-textdraw-streamer](https://github.com/nexquery/samp-textdraw-streamer)
 
+- New features:
+    - Use TextDraw sprites (LD_SPAC:white) instead of box.
+    - New types (direction): Vertically and horizontally middle-to-edge types.
+    - Border size (set to 0.0 to hide background bar).
+    - Sub bar with override mode for sub bar (sub bar cant be use with middle-to-edge types).
+
 ## INSTALLATION
 Include in your code and begin using the library:
 
@@ -31,8 +37,8 @@ Include in your code and begin using the library:
 - `SP_BAR_TYPE_LEFT`: Bar direction right-to-left.
 - `SP_BAR_TYPE_UP`: Bar direction bottom to top.
 - `SP_BAR_TYPE_DOWN`: Bar direction top to bottom.
-- `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertical (sub bar will not work with this type).
-- `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontal (sub bar will not work with this type).
+- `SP_BAR_TYPE_MID_V`: Bar direction middle-to-edge vertically (sub bar will not work with this type).
+- `SP_BAR_TYPE_MID_H`: Bar direction middle-to-edge horizontally (sub bar will not work with this type).
   
 ## FUNCTIONS
 ### Main
@@ -90,7 +96,7 @@ Include in your code and begin using the library:
 - `SetPlayerSProgressSubMinValue(playerid, barid, Float:val)`: Set the sub min value of a progress bar.
 - `SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)`: Set the sub max value of a progress bar.
 
-## Hooked
+## HOOKED
 - `OnScriptInit`: When y_iterate is used, initialises iterators.
 - `OnPlayerDisconnect`: To automatically destroy bars when a player disconnects.
 - `OnScriptExit`
