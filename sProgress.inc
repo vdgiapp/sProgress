@@ -150,7 +150,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
 {
     if (!IsPlayerConnected(playerid))
     {
-        printf("[SProgress] ERROR: Attempt to create SProgress for invalid player");
+        printf("[SProgress] ERROR: Attempt to create SProgress for invalid player.");
         return INVALID_SP_BAR_ID;
     }
     if (!is_sprogress_initialised) SProgressTD_ResetAll();
@@ -158,6 +158,10 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     if (barid == ITER_NONE)
     {
         printf("[SProgress] ERROR: Limit reached.");
+        return INVALID_SP_BAR_ID;
+    }
+    if(max < 0) {
+        printf("[SProgress] ERROR: Max value must be greater or equal 0.");
         return INVALID_SP_BAR_ID;
     }
     sp_Data[playerid][barid][is_created] = true;
@@ -174,7 +178,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     sp_Data[playerid][barid][sp_override] = false;
     sp_Data[playerid][barid][sp_minValue] = 0.0;
     sp_Data[playerid][barid][sp_maxValue] = max;
-    sp_Data[playerid][barid][sp_value] = 50.0;
+    sp_Data[playerid][barid][sp_value] = max/2;
     sp_Data[playerid][barid][sp_subMin] = 0.0;
     sp_Data[playerid][barid][sp_subMax] = 0.0;
     sp_Data[playerid][barid][sp_type] = type;
