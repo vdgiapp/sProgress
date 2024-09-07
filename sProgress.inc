@@ -50,7 +50,8 @@ enum static E_SPROGRESS_DATA
     Float:sp_posY,
     Float:sp_width,
     Float:sp_height,
-    Float:sp_borderSize,
+    Float:sp_bSizeX,
+    Float:sp_bSizeY,
     sp_colourFill,
     sp_colourMain,
     sp_colourBack,
@@ -77,8 +78,9 @@ static bool:is_sprogress_initialised = false;
 static Iterator:sp_Index[MAX_PLAYERS]<MAX_SPROGRESS_BARS>;
 static sp_Data[MAX_PLAYERS][MAX_SPROGRESS_BARS][E_SPROGRESS_DATA];
 
-static stock SProgressTD_ResetPlayerItem(playerid, barid)
+static SProgressTD_ResetPlayerItem(playerid, barid)
 {
+    if(barid < 0) return 0;
     sp_TextDraw[playerid][barid][sp_back] = INVALID_PLAYER_TEXT_DRAW;
     sp_TextDraw[playerid][barid][sp_fill] = INVALID_PLAYER_TEXT_DRAW;
     sp_TextDraw[playerid][barid][sp_sub] = INVALID_PLAYER_TEXT_DRAW;
@@ -87,7 +89,7 @@ static stock SProgressTD_ResetPlayerItem(playerid, barid)
     return 1;
 }
 
-static stock SProgressTD_ResetPlayer(playerid)
+static SProgressTD_ResetPlayer(playerid)
 {
     for (new barid = 0; barid < MAX_SPROGRESS_BARS; ++barid)
     {
@@ -96,7 +98,7 @@ static stock SProgressTD_ResetPlayer(playerid)
     return 1;
 }
 
-static stock SProgressTD_ResetAll()
+static SProgressTD_ResetAll()
 {
     for (new playerid = 0; playerid < MAX_PLAYERS; ++playerid)
     {
@@ -106,17 +108,17 @@ static stock SProgressTD_ResetAll()
     return 1;
 }
 
-stock bool:IsValidPlayerSProgress(playerid, barid)
+bool:IsValidPlayerSProgress(playerid, barid)
 {
     return Iter_Contains(sp_Index[playerid], barid);
 }
 
-stock bool:IsPlayerSProgressVisible(playerid, barid)
+bool:IsPlayerSProgressVisible(playerid, barid)
 {
     return (IsValidPlayerSProgress(playerid, barid) && sp_Data[playerid][barid][sp_show]);
 }
 
-stock ShowPlayerSProgress(playerid, barid)
+ShowPlayerSProgress(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_show] = true;
@@ -135,7 +137,7 @@ stock ShowPlayerSProgress(playerid, barid)
     return 1;
 }
 
-stock HidePlayerSProgress(playerid, barid)
+HidePlayerSProgress(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_show] = false;
@@ -146,7 +148,7 @@ stock HidePlayerSProgress(playerid, barid)
     return 1;
 }
 
-stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)
+CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:max = 100.0, type = SP_BAR_TYPE_RIGHT)
 {
     if (!IsPlayerConnected(playerid))
     {
@@ -170,7 +172,8 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     sp_Data[playerid][barid][sp_posY] = y;
     sp_Data[playerid][barid][sp_width] = w;
     sp_Data[playerid][barid][sp_height] = h;
-    sp_Data[playerid][barid][sp_borderSize] = 2.0;
+    sp_Data[playerid][barid][sp_bSizeX] = 1.5;
+    sp_Data[playerid][barid][sp_bSizeY] = 1.5;
     sp_Data[playerid][barid][sp_colourBack] = 0x000000FF;
     sp_Data[playerid][barid][sp_colourFill] = 0x9E9E9EFF;
     sp_Data[playerid][barid][sp_colourMain] = 0xFFFFFFFF;
@@ -178,13 +181,13 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     sp_Data[playerid][barid][sp_override] = false;
     sp_Data[playerid][barid][sp_minValue] = 0.0;
     sp_Data[playerid][barid][sp_maxValue] = max;
-    sp_Data[playerid][barid][sp_value] = max/2;
+    sp_Data[playerid][barid][sp_value] = max/2.0;
     sp_Data[playerid][barid][sp_subMin] = 0.0;
     sp_Data[playerid][barid][sp_subMax] = 0.0;
     sp_Data[playerid][barid][sp_type] = type;
 
-    sp_TextDraw[playerid][barid][sp_back] = CreatePlayerTextDraw(playerid, x - sp_Data[playerid][barid][sp_borderSize], y - sp_Data[playerid][barid][sp_borderSize], "LD_SPAC:white");
-    PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_width] * 2, sp_Data[playerid][barid][sp_height] * 2);
+    sp_TextDraw[playerid][barid][sp_back] = CreatePlayerTextDraw(playerid, x - sp_Data[playerid][barid][sp_bSizeX], y - sp_Data[playerid][barid][sp_bSizeY], "LD_SPAC:white");
+    PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_width] * 2.0, sp_Data[playerid][barid][sp_height] * 2.0);
     PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_back], TEXT_DRAW_ALIGN_LEFT);
     PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_back], sp_Data[playerid][barid][sp_colourBack]);
     PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_back], 0);
@@ -204,7 +207,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     PlayerTextDrawSetProportional(playerid, sp_TextDraw[playerid][barid][sp_fill], true);
 
     sp_TextDraw[playerid][barid][sp_sub] = CreatePlayerTextDraw(playerid, x, y, "LD_SPAC:white");
-    PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_sub], 0, 0);
+    PlayerTextDrawTextSize(playerid, sp_TextDraw[playerid][barid][sp_sub], 0.0, 0.0);
     PlayerTextDrawAlignment(playerid, sp_TextDraw[playerid][barid][sp_sub], TEXT_DRAW_ALIGN_LEFT);
     PlayerTextDrawColour(playerid, sp_TextDraw[playerid][barid][sp_sub], sp_Data[playerid][barid][sp_colourSub]);
     PlayerTextDrawSetShadow(playerid, sp_TextDraw[playerid][barid][sp_sub], 0);
@@ -228,7 +231,7 @@ stock CreatePlayerSProgress(playerid, Float:x, Float:y, Float:w, Float:h, Float:
     return barid;
 }
 
-static stock _ptextdraw_destroy_array(playerid, const PlayerText:ptd_array[E_SPROGRESS_TD])
+static _ptextdraw_destroy_array(playerid, const PlayerText:ptd_array[E_SPROGRESS_TD])
 {
     for (new E_SPROGRESS_TD:ptd_slot = E_SPROGRESS_TD:0; ptd_slot < E_SPROGRESS_TD:4; ++ptd_slot)
     {
@@ -236,7 +239,7 @@ static stock _ptextdraw_destroy_array(playerid, const PlayerText:ptd_array[E_SPR
     }
 }
 
-stock DestroyPlayerSProgress(playerid, barid)
+DestroyPlayerSProgress(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     _ptextdraw_destroy_array(playerid, sp_TextDraw[playerid][barid]);
@@ -245,7 +248,7 @@ stock DestroyPlayerSProgress(playerid, barid)
     return 1;
 }
 
-stock DestroyAllPlayerSProgress(playerid)
+DestroyAllPlayerSProgress(playerid)
 {
     for (new i = 0; i < MAX_SPROGRESS_BARS; i++)
     {
@@ -255,7 +258,7 @@ stock DestroyAllPlayerSProgress(playerid)
 }
 
 // Pos
-stock GetPlayerSProgressPos(playerid, barid, &Float:x, &Float:y)
+GetPlayerSProgressPos(playerid, barid, &Float:x, &Float:y)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return INVALID_SP_BAR_VALUE;
     x = sp_Data[playerid][barid][sp_posX];
@@ -263,7 +266,7 @@ stock GetPlayerSProgressPos(playerid, barid, &Float:x, &Float:y)
     return 1;
 }
 
-stock SetPlayerSProgressPos(playerid, barid, Float:x, Float:y)
+SetPlayerSProgressPos(playerid, barid, Float:x, Float:y)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return INVALID_SP_BAR_VALUE;
     sp_Data[playerid][barid][sp_posX] = x;
@@ -273,13 +276,13 @@ stock SetPlayerSProgressPos(playerid, barid, Float:x, Float:y)
 }
 
 // Width
-stock Float:GetPlayerSProgressWidth(playerid, barid)
+Float:GetPlayerSProgressWidth(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return INVALID_SP_BAR_VALUE;
     return sp_Data[playerid][barid][sp_width];
 }
 
-stock SetPlayerSProgressWidth(playerid, barid, Float:w)
+SetPlayerSProgressWidth(playerid, barid, Float:w)
 {
     if (w < 0)
     {
@@ -293,13 +296,13 @@ stock SetPlayerSProgressWidth(playerid, barid, Float:w)
 }
 
 // Height
-stock Float:GetPlayerSProgressHeight(playerid, barid)
+Float:GetPlayerSProgressHeight(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return INVALID_SP_BAR_VALUE;
     return sp_Data[playerid][barid][sp_height];
 }
 
-stock SetPlayerSProgressHeight(playerid, barid, Float:h)
+SetPlayerSProgressHeight(playerid, barid, Float:h)
 {
     if (h < 0)
     {
@@ -313,33 +316,36 @@ stock SetPlayerSProgressHeight(playerid, barid, Float:h)
 }
 
 // Border
-stock Float:GetPlayerSProgressBorderSize(playerid, barid)
+GetPlayerSProgressBorderSize(playerid, barid, &Float:size_x, &Float:size_y)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return INVALID_SP_BAR_VALUE;
-    return sp_Data[playerid][barid][sp_borderSize];
+    size_x = sp_Data[playerid][barid][sp_bSizeX];
+    size_y = sp_Data[playerid][barid][sp_bSizeY];
+    return 1;
 }
 
-stock SetPlayerSProgressBorderSize(playerid, barid, Float:b)
+SetPlayerSProgressBorderSize(playerid, barid, Float:size_x, Float:size_y)
 {
-    if (b < 0)
+    if (size_x < 0 || size_y < 0)
     {
         printf("[SProgress] ERROR: SetPlayerSProgressBorderSize must be greater or equal 0");
         return 0;
     }
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
-    sp_Data[playerid][barid][sp_borderSize] = b;
+    sp_Data[playerid][barid][sp_bSizeX] = size_x;
+    sp_Data[playerid][barid][sp_bSizeY] = size_y;
     SProgress_RenderBar(playerid, barid);
     return 1;
 }
 
 // Override (sub bar override main bar)
-stock bool:GetPlayerSProgressOverride(playerid, barid)
+bool:GetPlayerSProgressOverride(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return false;
     return sp_Data[playerid][barid][sp_override];
 }
 
-stock SetPlayerSProgressOverride(playerid, barid, bool:override)
+SetPlayerSProgressOverride(playerid, barid, bool:override)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_override] = override;
@@ -348,31 +354,31 @@ stock SetPlayerSProgressOverride(playerid, barid, bool:override)
 }
 
 // Colour
-stock GetPlayerSProgressMainColour(playerid, barid)
+GetPlayerSProgressMainColour(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_colourMain];
 }
 
-stock GetPlayerSProgressFillColour(playerid, barid)
+GetPlayerSProgressFillColour(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_colourFill];
 }
 
-stock GetPlayerSProgressBackColour(playerid, barid)
+GetPlayerSProgressBackColour(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_colourBack];
 }
 
-stock GetPlayerSProgressSubColour(playerid, barid)
+GetPlayerSProgressSubColour(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_colourSub];
 }
 
-stock SetPlayerSProgressMainColour(playerid, barid, colour)
+SetPlayerSProgressMainColour(playerid, barid, colour)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_colourMain] = colour;
@@ -380,7 +386,7 @@ stock SetPlayerSProgressMainColour(playerid, barid, colour)
     return 1;
 }
 
-stock SetPlayerSProgressFillColour(playerid, barid, colour)
+SetPlayerSProgressFillColour(playerid, barid, colour)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_colourFill] = colour;
@@ -388,7 +394,7 @@ stock SetPlayerSProgressFillColour(playerid, barid, colour)
     return 1;
 }
 
-stock SetPlayerSProgressBackColour(playerid, barid, colour)
+SetPlayerSProgressBackColour(playerid, barid, colour)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_colourBack] = colour;
@@ -396,7 +402,7 @@ stock SetPlayerSProgressBackColour(playerid, barid, colour)
     return 1;
 }
 
-stock SetPlayerSProgressSubColour(playerid, barid, colour)
+SetPlayerSProgressSubColour(playerid, barid, colour)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     sp_Data[playerid][barid][sp_colourSub] = colour;
@@ -405,37 +411,37 @@ stock SetPlayerSProgressSubColour(playerid, barid, colour)
 }
 
 // Value
-stock GetPlayerSProgressMinValue(playerid, barid)
+GetPlayerSProgressMinValue(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_minValue];
 }
 
-stock GetPlayerSProgressMaxValue(playerid, barid)
+GetPlayerSProgressMaxValue(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_maxValue];
 }
 
-stock GetPlayerSProgressValue(playerid, barid)
+GetPlayerSProgressValue(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_value];
 }
 
-stock GetPlayerSProgressSubMinValue(playerid, barid)
+GetPlayerSProgressSubMinValue(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_subMin];
 }
 
-stock GetPlayerSProgressSubMaxValue(playerid, barid)
+GetPlayerSProgressSubMaxValue(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return 0;
     return sp_Data[playerid][barid][sp_subMax];
 }
 
-stock SetPlayerSProgressMinValue(playerid, barid, Float:val)
+SetPlayerSProgressMinValue(playerid, barid, Float:val)
 {
     if (val < 0)
     {
@@ -450,7 +456,7 @@ stock SetPlayerSProgressMinValue(playerid, barid, Float:val)
     return 1;
 }
 
-stock SetPlayerSProgressMaxValue(playerid, barid, Float:val)
+SetPlayerSProgressMaxValue(playerid, barid, Float:val)
 {
     if (val < 0)
     {
@@ -465,7 +471,7 @@ stock SetPlayerSProgressMaxValue(playerid, barid, Float:val)
     return 1;
 }
 
-stock SetPlayerSProgressValue(playerid, barid, Float:val)
+SetPlayerSProgressValue(playerid, barid, Float:val)
 {
     if (val < 0)
     {
@@ -485,7 +491,7 @@ stock SetPlayerSProgressValue(playerid, barid, Float:val)
     return 1;
 }
 
-stock SetPlayerSProgressSubMinValue(playerid, barid, Float:val)
+SetPlayerSProgressSubMinValue(playerid, barid, Float:val)
 {
     if (val < 0)
     {
@@ -498,7 +504,7 @@ stock SetPlayerSProgressSubMinValue(playerid, barid, Float:val)
     return 1;
 }
 
-stock SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)
+SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)
 {
     if (val < 0)
     {
@@ -512,13 +518,13 @@ stock SetPlayerSProgressSubMaxValue(playerid, barid, Float:val)
 }
 
 // Type (direction)
-stock GetPlayerSProgressType(playerid, barid)
+GetPlayerSProgressType(playerid, barid)
 {
     if (!IsValidPlayerSProgress(playerid, barid)) return SP_BAR_TYPE_RIGHT;
     return sp_Data[playerid][barid][sp_type];
 }
 
-stock SetPlayerSProgressType(playerid, barid, type)
+SetPlayerSProgressType(playerid, barid, type)
 {
     if (type < SP_BAR_TYPE_RIGHT || type > SP_BAR_TYPE_MID_H)
     {
@@ -531,7 +537,7 @@ stock SetPlayerSProgressType(playerid, barid, type)
     return 1;
 }
 
-static stock SProgress_RedrawXY(playerid, &PlayerText:textid, Float:x, Float:y, Float:w, Float:h)
+static SProgress_RedrawXY(playerid, &PlayerText:textid, Float:x, Float:y, Float:w, Float:h)
 {
 	#if defined PlayerTextDrawSetPos
     {
@@ -561,15 +567,15 @@ static stock SProgress_RedrawXY(playerid, &PlayerText:textid, Float:x, Float:y, 
     return 1;
 }
 
-static stock SProgress_RenderBar(playerid, barid)
+static SProgress_RenderBar(playerid, barid)
 {
     new bar_data[E_SPROGRESS_DATA];
     bar_data = sp_Data[playerid][barid];
     SProgress_RedrawXY(playerid, sp_TextDraw[playerid][barid][sp_back],
-		bar_data[sp_posX] - bar_data[sp_borderSize],
-		bar_data[sp_posY] - bar_data[sp_borderSize],
-		bar_data[sp_width] + (bar_data[sp_borderSize] * 2),
-		bar_data[sp_height] + (bar_data[sp_borderSize] * 2)
+		bar_data[sp_posX] - bar_data[sp_bSizeX],
+		bar_data[sp_posY] - bar_data[sp_bSizeY],
+		bar_data[sp_width] + (bar_data[sp_bSizeX] * 2),
+		bar_data[sp_height] + (bar_data[sp_bSizeY] * 2)
 	);
     SProgress_RedrawXY(playerid, sp_TextDraw[playerid][barid][sp_fill],
 		bar_data[sp_posX],
@@ -671,6 +677,9 @@ static stock SProgress_RenderBar(playerid, barid)
     {
         HidePlayerSProgress(playerid, barid);
         ShowPlayerSProgress(playerid, barid);
+    }
+    else {
+        HidePlayerSProgress(playerid, barid);
     }
     return 1;
 }
